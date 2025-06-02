@@ -1,4 +1,4 @@
 ﻿public interface ICubePlacer
 {
-    bool TryPlaceCube(CubeItem cube);
+    DropResult TryPlaceCube(CubeItem cube);
 }

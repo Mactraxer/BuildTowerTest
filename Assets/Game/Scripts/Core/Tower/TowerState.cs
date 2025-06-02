@@ -5,13 +5,14 @@ using UnityEngine;
 public class TowerState : ITowerState
 {
     private readonly List<CubeItem> _cubes = new();
+    private readonly float maxHorizontalOffset = 50f;
     private float _maxHeight;
 
     public TowerState(float maxHeight)
     {
         _maxHeight = maxHeight;
     }
-
+    //TODO: Убрать если сильно не нужно
     public IReadOnlyList<CubeItem> Cubes => _cubes;
     public int CubeCount => _cubes.Count;
 
@@ -26,16 +27,30 @@ public class TowerState : ITowerState
         return totalHeight + newCube.Height <= _maxHeight;
     }
 
+    public bool Contain(CubeItem cubeItem)
+    {
+        return _cubes.Contains(cubeItem);
+    }
+
     public Vector3 GetNextPosition(Vector3 basePosition, CubeItem forCube)
     {
-        float yOffset = 0f;
-        foreach (var cube in _cubes)
+        Vector2 position;
+
+        if (_cubes.Count == 0)
         {
-            yOffset += cube.Height;
+            position = basePosition;
+        }
+        else
+        {
+            var last = _cubes[_cubes.Count - 1];
+            float lastHeight = last.Height;
+            float lastY = last.RectTransform.anchoredPosition.y;
+
+            float offsetX = Random.Range(-maxHorizontalOffset, maxHorizontalOffset);
+            position = new Vector2(offsetX, lastY + lastHeight);
         }
 
-        float randomXOffset = Random.Range(-0.5f, 0.5f) * forCube.Width;
-        return basePosition + new Vector3(randomXOffset, yOffset, 0f);
+        return position;
     }
 
     public bool IsCanPlaceByHeight(CubeItem cubeItem)

@@ -5,37 +5,31 @@ public class TowerCubePlacer : ICubePlacer
     private readonly RectTransform _towerParent;
     private readonly ITowerState _towerState;
     private readonly ITowerPlacementValidator _placementValidator;
-    private readonly IMessageService _messageService;
 
-    public TowerCubePlacer(RectTransform towerParent, ITowerState state, ITowerPlacementValidator placementValidator, IMessageService messages)
+    public TowerCubePlacer(RectTransform towerParent, ITowerState state, ITowerPlacementValidator placementValidator)
     {
         _towerParent = towerParent;
         _towerState = state;
         _placementValidator = placementValidator;
-        _messageService = messages;
     }
 
-    public bool TryPlaceCube(CubeItem cubeItem)
+    public DropResult TryPlaceCube(CubeItem cube)
     {
-        //TODO: Проверки нужно объяденить в одно место
-        if (!_towerState.IsCanPlaceByHeight(cubeItem))
+        if (!_towerState.IsCanPlaceByHeight(cube))
         {
-            _messageService.ShowMessage(GameEventType.HeightLimit);
-            return false;
+            return new DropResult(false, DropError.HeightLimit);
         }
 
-        if (!_placementValidator.IsValid(cubeItem.Position))
+        if (!_placementValidator.IsValid(cube.Position))
         {
-            _messageService.ShowMessage(GameEventType.Missed);
-            return false;
+            return new DropResult(false, DropError.MissToTower);
         }
 
-        Vector3 newPosition = _towerState.GetNextPosition(_towerParent.position, cubeItem);
-        cubeItem.transform.SetParent(_towerParent);
-        cubeItem.AnimatePlace(newPosition);
+        Vector3 newPosition = _towerState.GetNextPosition(_towerParent.anchoredPosition, cube);
+        cube.transform.SetParent(_towerParent);
+        cube.AnimatePlaceInTower(newPosition);
 
-        _towerState.AddCube(cubeItem);
-        _messageService.ShowMessage(GameEventType.Placed);
-        return true;
+        _towerState.AddCube(cube);
+        return new DropResult(true);
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine.UIElements;
 using UnityEngine;
 using Zenject;
 
-public class GameInstaller : MonoInstaller
+public class LevelInstaller : MonoInstaller
 {
     [SerializeField] private RectTransform _trashZone;
     [SerializeField] private RectTransform _towerParent;
@@ -11,7 +11,7 @@ public class GameInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<ITowerState>().To<TowerState>().AsSingle().WithArguments(_maxTowerHeight);
-        Container.Bind<IMessageService>().To<GameMessageService>().AsSingle();
+        
         Container.Bind<ICubePlacer>().To<TowerCubePlacer>().AsSingle().WithArguments(_towerParent);
         Container.Bind<ICubeRemover>().To<TowerCubeRemover>().AsSingle();
         Container.Bind<ITrashZoneValidator>().To<EllipseTrashZoneValidator>().AsSingle().WithArguments(_trashZone);

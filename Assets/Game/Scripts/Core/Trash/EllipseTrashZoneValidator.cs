@@ -13,8 +13,8 @@ public class EllipseTrashZoneValidator : ITrashZoneValidator
     {
         Vector2 center = _ellipse.position;
         Vector2 size = _ellipse.rect.size * _ellipse.lossyScale;
-        float dx = (pos.x - center.x) / (size.x / 2);
-        float dy = (pos.y - center.y) / (size.y / 2);
-        return dx * dx + dy * dy <= 1;
+        float deltaX = (pos.x - center.x) / (size.x / 2);
+        float deltaY = (pos.y - center.y) / (size.y / 2);
+        return deltaX * deltaX + deltaY * deltaY <= 1;
     }
 }

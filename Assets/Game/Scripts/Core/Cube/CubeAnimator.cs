@@ -8,22 +8,33 @@ public class CubeAnimator : MonoBehaviour
     [SerializeField] private float _jumpDuration = 0.3f;
     [SerializeField] private float _missDuration = 0.5f;
 
+    private RectTransform _rectTransform;
+
+    private void Awake()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+    }
     public void AnimateMiss(Action callback)
     {
         transform.DOScale(Vector3.zero, _missDuration).SetEase(Ease.InBack)
             .OnComplete(() => callback?.Invoke());
     }
 
-    public void AnimatePlace(Vector3 targetPos)
+    public void AnimatePlaceWithHorizontalOffset(Vector3 targetPos)
     {
-        Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOMoveY(transform.position.y + _jumpHeight, _jumpDuration / 2f).SetEase(Ease.OutQuad));
-        seq.Append(transform.DOMoveY(targetPos.y, _jumpDuration / 2f).SetEase(Ease.InQuad));
-        seq.Join(transform.DOMoveX(targetPos.x, _jumpDuration));
+        Sequence sequence = DOTween.Sequence().OnComplete(() => { Debug.Log(transform.position); });
+        sequence.Append(_rectTransform.DOAnchorPosY(_rectTransform.anchoredPosition.y + _jumpHeight, _jumpDuration / 2f).SetEase(Ease.OutQuad));
+        sequence.Append(_rectTransform.DOAnchorPosY(targetPos.y, _jumpDuration / 2f).SetEase(Ease.InQuad));
+        sequence.Join(_rectTransform.DOAnchorPosX(targetPos.x, _jumpDuration));
     }
 
     public void AnimateFallDown(float height)
     {
-        transform.DOMoveY(transform.position.y - height, 0.25f).SetEase(Ease.InOutQuad);
+        _rectTransform.DOAnchorPosY(_rectTransform.anchoredPosition.y - height, 0.25f).SetEase(Ease.InOutQuad);
+    }
+
+    public void AnimatePlace(Vector2 position)
+    {
+        _rectTransform.DOAnchorPos(position, 0.25f).SetEase(Ease.InOutQuad);
     }
 }

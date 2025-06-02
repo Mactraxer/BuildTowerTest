@@ -15,7 +15,7 @@ public class TowerCubeRemover : ICubeRemover
     public void Remove(CubeItem cubeItem)
     {
         int removedIndex = _towerState.RemoveCube(cubeItem);
-        Object.Destroy(cubeItem.gameObject);
+        cubeItem.AnimateDelete();
         _messageService.ShowMessage(GameEventType.Removed);
 
         for (int i = removedIndex; i < _towerState.CubeCount; i++)

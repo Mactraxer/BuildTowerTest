@@ -8,6 +8,7 @@ public interface ITowerState
 
     void AddCube(CubeItem cube);
     bool CanAddCube(CubeItem cube);
+    bool Contain(CubeItem cubeItem);
     Vector3 GetNextPosition(Vector3 basePosition, CubeItem forCube);
     bool IsCanPlaceByHeight(CubeItem cubeItem);
     int RemoveCube(CubeItem cube);
