@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class DataExtensions
 {
@@ -21,5 +20,15 @@ public static class DataExtensions
     public static T ToDesearialized<T>(this string json)
     {
         return JsonUtility.FromJson<T>(json);
+    }
+
+    public static Color AsUnityColor(this ColorData colorData)
+    {
+        return new Color(colorData.Red, colorData.Green, colorData.Blue, colorData.Alpha);
+    }
+
+    public static ColorData AsColorData(this Color color)
+    {
+        return new ColorData(color.r, color.g, color.b, color.a);
     }
 }

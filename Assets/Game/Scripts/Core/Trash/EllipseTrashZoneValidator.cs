@@ -1,20 +1,29 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EllipseTrashZoneValidator : ITrashZoneValidator
 {
-    private readonly RectTransform _ellipse;
-
-    public EllipseTrashZoneValidator(RectTransform ellipse)
+    public bool IsInside(RectTransform cubeRect, RectTransform ellipse)
     {
-        _ellipse = ellipse;
+        Vector2 ellipseCenter = GetEllipseCenterWorld(ellipse);
+        Vector2 cubeCenter = GetCubeCenterWorld(cubeRect);
+
+        Vector2 localPos = cubeCenter - ellipseCenter;
+
+        float a = ellipse.rect.width * ellipse.lossyScale.x;
+        float b = ellipse.rect.height * ellipse.lossyScale.y;
+
+        float equationValue = Mathf.Pow(localPos.x / a, 2) + Mathf.Pow(localPos.y / b, 2);
+        return equationValue <= 1f;
     }
 
-    public bool IsInside(Vector2 pos)
+    private Vector2 GetEllipseCenterWorld(RectTransform ellipseRect)
     {
-        Vector2 center = _ellipse.position;
-        Vector2 size = _ellipse.rect.size * _ellipse.lossyScale;
-        float deltaX = (pos.x - center.x) / (size.x / 2);
-        float deltaY = (pos.y - center.y) / (size.y / 2);
-        return deltaX * deltaX + deltaY * deltaY <= 1;
+        return ellipseRect.TransformPoint(ellipseRect.rect.center);
+    }
+
+    private Vector2 GetCubeCenterWorld(RectTransform cube)
+    {
+        return cube.TransformPoint(cube.rect.center);
     }
 }

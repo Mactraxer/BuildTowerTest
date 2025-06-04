@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Cube;
+using UnityEngine;
 using Zenject;
 
 //TODO: Перенести в TowerState
@@ -9,7 +10,7 @@ public class SimpleTowerPlacementValidator : ITowerPlacementValidator
     private readonly float _maxHorizontalOffsetRatio;
     private readonly float _minVerticalOffset;
 
-    public SimpleTowerPlacementValidator(float maxHorizontalOffsetRatio = 0.5f, float minVerticalOffset = 10f)
+    public SimpleTowerPlacementValidator(float maxHorizontalOffsetRatio, float minVerticalOffset)
     {
         _maxHorizontalOffsetRatio = maxHorizontalOffsetRatio;
         _minVerticalOffset = minVerticalOffset;

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Core.Cube;
+using Infrastructure;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AnyColorBall.Infrastructure
@@ -6,23 +8,31 @@ namespace AnyColorBall.Infrastructure
     public class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
+        private readonly ICubeFactory _cubeFactory;
 
         public List<IReadablePlayerProgress> ProgressReaders { get; } = new List<IReadablePlayerProgress>();
         public List<ISavedPlayerProgress> ProgressWriters { get; } = new List<ISavedPlayerProgress>();
 
-        public GameFactory(IAssetProvider assetProvider)
+        public GameFactory(IAssetProvider assetProvider, ICubeFactory cubeFactory)
         {
             _assetProvider = assetProvider;
-        }
-
-        public GameObject CreatePlayer(Vector3 position)
-        {
-            return InstantiateRegistered(AssetsPath.PlayerPath, position);
+            _cubeFactory = cubeFactory;
         }
 
         public GameObject CreateLevel()
         {
             return _assetProvider.Instantiate(AssetsPath.LevelDemoPath);
+        }
+
+        public CubeItem[] CreateItems()
+        {
+            CubeItem[] cubeItems = _cubeFactory.CreateCubeItems();
+            foreach (CubeItem cubeItem in cubeItems)
+            {
+                RegisterSaveable(cubeItem);
+            }
+
+            return cubeItems;
         }
 
         public void Cleanup()
@@ -31,25 +41,8 @@ namespace AnyColorBall.Infrastructure
             ProgressWriters.Clear();
         }
 
-        private GameObject InstantiateRegistered(string prefabPath, Vector3 position)
+        private void RegisterSaveable(ISavedPlayerProgress progressWriter)
         {
-            GameObject gameObject = _assetProvider.Instantiate(prefabPath, position);
-
-            foreach (ISavedPlayerProgress progressReader in gameObject.GetComponentsInChildren<ISavedPlayerProgress>())
-            {
-                Register(progressReader);
-            }
-
-            return gameObject;
-        }
-
-        private void Register(ISavedPlayerProgress progressWriter)
-        {
-            if (progressWriter is IReadablePlayerProgress reader)
-            {
-                ProgressReaders.Add(reader);
-            }
-
             ProgressWriters.Add(progressWriter);
         }
     }

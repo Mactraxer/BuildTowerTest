@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class WorldData
 {
-    public PositionOnLevel PositionOnLevel;
+    public List<ItemData> Items;
+    public string Level;
 
     public WorldData(string initialLevel)
     {
-        PositionOnLevel = new PositionOnLevel(initialLevel);
+        Items = new List<ItemData>();
+        Level = initialLevel;
     }
 }

@@ -1,8 +1,9 @@
-﻿using AnyColorBall.Services.Data;
-using System;
-using UnityEngine;
+﻿using AnyColorBall.Infrastructure;
+using AnyColorBall.Services.Data;
+using Core.Cube;
+using System.Linq;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure
 {
     public class LoadLevelState : IPayloadableState<string>
     {
@@ -40,22 +41,30 @@ namespace AnyColorBall.Infrastructure
         private void OnLoaded()
         {
             CreateGameWorld();
-            InformProgressReaders();
 
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void InformProgressReaders()
-        {
-            foreach (IReadablePlayerProgress reader in _gameFactory.ProgressReaders)
-            {
-                reader.ReadProgress(_progressService.Progress);
-            }
-        }
-
         private void CreateGameWorld()
         {
-            _gameFactory.CreateLevel();
+            Level level = _gameFactory.CreateLevel().GetComponent<Level>();
+            CubeItem[] cubeItems = _gameFactory.CreateItems();
+
+            for (int i = 0; i < cubeItems.Length; i++)
+            {
+                CubeItem cubeItem = cubeItems[i];
+                CubeDragHandler cubeDragHandler = cubeItem.GetComponent<CubeDragHandler>();
+
+                if (i < _progressService.Progress.WorldData.Items.Count)
+                {
+                    ItemData itemData = _progressService.Progress.WorldData.Items.First(item => item.ID == cubeItem.ItemID);
+                    level.CubeTowerCoordinator.RegisterCubeWithData(cubeItem, itemData, cubeDragHandler);
+                }
+                else
+                {
+                    level.CubeTowerCoordinator.RegisterCube(cubeItem, cubeDragHandler, true);
+                }
+            }
         }
     }
 }

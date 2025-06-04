@@ -1,6 +1,7 @@
-﻿using AnyColorBall.Services.Data;
+﻿using AnyColorBall.Infrastructure;
+using AnyColorBall.Services.Data;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure
 {
     public class LoadProgressState : IState
     {
@@ -23,7 +24,7 @@ namespace AnyColorBall.Infrastructure
         public void Enter()
         {
             LoadProgressOrInitNew();
-            _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.PositionOnLevel.Level);
+            _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.WorldData.Level);
         }
 
         public void Exit()

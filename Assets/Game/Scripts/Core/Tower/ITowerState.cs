@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core.Cube;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface ITowerState
@@ -7,9 +8,9 @@ public interface ITowerState
     IReadOnlyList<CubeItem> Cubes { get; }
 
     void AddCube(CubeItem cube);
-    bool CanAddCube(CubeItem cube);
     bool Contain(CubeItem cubeItem);
-    Vector3 GetNextPosition(Vector3 basePosition, CubeItem forCube);
+    Vector3 GetNextPosition(RectTransform towerRect, CubeItem forCube, RectTransform canvasRect);
     bool IsCanPlaceByHeight(CubeItem cubeItem);
     int RemoveCube(CubeItem cube);
+    void SetMaxY(float height);
 }

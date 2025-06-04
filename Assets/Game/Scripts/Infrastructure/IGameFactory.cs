@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core.Cube;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AnyColorBall.Infrastructure
@@ -9,7 +10,7 @@ namespace AnyColorBall.Infrastructure
         List<ISavedPlayerProgress> ProgressWriters { get; }
 
         void Cleanup();
+        CubeItem[] CreateItems();
         GameObject CreateLevel();
-        GameObject CreatePlayer(Vector3 position);
     }
 }

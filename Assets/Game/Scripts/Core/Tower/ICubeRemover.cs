@@ -1,4 +1,6 @@
-﻿public interface ICubeRemover
+﻿using Core.Cube;
+
+public interface ICubeRemover
 {
     void Remove(CubeItem cube);
 }

@@ -1,4 +1,4 @@
-﻿public interface ISavedPlayerProgress: IReadablePlayerProgress
+﻿public interface ISavedPlayerProgress
 {
     void UpdateProgress(PlayerProgress progress);
 }

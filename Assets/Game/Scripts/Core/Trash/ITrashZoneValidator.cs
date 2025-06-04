@@ -2,5 +2,5 @@
 
 public interface ITrashZoneValidator
 {
-    bool IsInside(Vector2 screenPosition);
+    bool IsInside(RectTransform cubeRect, RectTransform ellipse);
 }

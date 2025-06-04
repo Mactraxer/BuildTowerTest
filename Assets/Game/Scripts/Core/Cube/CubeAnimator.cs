@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Core.Cube;
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -20,9 +21,15 @@ public class CubeAnimator : MonoBehaviour
             .OnComplete(() => callback?.Invoke());
     }
 
-    public void AnimatePlaceWithHorizontalOffset(Vector3 targetPos)
+    public void AnimatePlaceWithHorizontalOffset(Vector3 targetPos, Action callback)
     {
-        Sequence sequence = DOTween.Sequence().OnComplete(() => { Debug.Log(transform.position); });
+        Sequence sequence = DOTween.Sequence().OnComplete(() =>
+        {
+            /*_rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            _rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            _rectTransform.anchorMax = new Vector2(0.5f, 0.5f);*/
+            callback?.Invoke();
+        });
         sequence.Append(_rectTransform.DOAnchorPosY(_rectTransform.anchoredPosition.y + _jumpHeight, _jumpDuration / 2f).SetEase(Ease.OutQuad));
         sequence.Append(_rectTransform.DOAnchorPosY(targetPos.y, _jumpDuration / 2f).SetEase(Ease.InQuad));
         sequence.Join(_rectTransform.DOAnchorPosX(targetPos.x, _jumpDuration));

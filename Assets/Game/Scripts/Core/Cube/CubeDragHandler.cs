@@ -1,3 +1,4 @@
+using Core.Cube;
 using R3;
 using System;
 using UnityEngine;
@@ -11,12 +12,11 @@ public class CubeDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     private const int MaxSortingOrder = 1000;
 
-    public readonly Subject<Vector2> OnBeginDragStream = new();
+    public readonly Subject<CubeItem> OnBeginDragStream = new();
     public readonly Subject<Unit> OnDragStream = new();
     public readonly Subject<CubeItem> OnDropStream = new();
 
-    [SerializeField] private Transform _dragLayer;
-
+    private Transform _dragLayer;
     private CubeItem _cubeItem;
     private Canvas _canvas;
     private RectTransform _rectTransform;
@@ -35,6 +35,7 @@ public class CubeDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+
         _origineParent = transform.parent;
         _startPosition = _rectTransform.anchoredPosition;
         transform.SetParent(_dragLayer);
@@ -43,7 +44,7 @@ public class CubeDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         _dragOffset = _rectTransform.anchoredPosition - localPoint;
         SetSorting(onTop: true);
-        OnBeginDragStream.OnNext(_startPosition);
+        OnBeginDragStream.OnNext(_cubeItem);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -62,10 +63,16 @@ public class CubeDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         OnDropStream.OnNext(_cubeItem);
     }
 
+    public void Setup(RectTransform dragLayer)
+    {
+        _dragLayer = dragLayer;
+    }
+
     private void SetSorting(bool onTop)
     {
         if (_canvas == null) return;
         _canvas.overrideSorting = true;
         _canvas.sortingOrder = onTop ? MaxSortingOrder : _baseSortingOrder;
     }
+
 }
