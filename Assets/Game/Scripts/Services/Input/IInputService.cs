@@ -1,4 +1,4 @@
-using AnyColorBall.Infrastructure;
+using Infrastructure.Services;
 using System;
 
 public interface IInputService : IService

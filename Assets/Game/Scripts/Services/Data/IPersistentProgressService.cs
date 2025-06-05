@@ -1,6 +1,7 @@
-﻿using AnyColorBall.Infrastructure;
+﻿using Data;
+using Infrastructure.Services;
 
-namespace AnyColorBall.Services.Data
+namespace Services.Data
 {
     public interface IPersistentProgressService : IService
     {

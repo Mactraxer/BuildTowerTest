@@ -1,13 +1,16 @@
 ﻿using System;
 
-[Serializable]
-public class PositionOnLevel
+namespace Data
 {
-    public string Level;
-    public Vector2Data Vector3Data;
-
-    public PositionOnLevel(string initialLevel)
+    [Serializable]
+    public class PositionOnLevel
     {
-        Level = initialLevel;
+        public string Level;
+        public Vector2Data Vector3Data;
+
+        public PositionOnLevel(string initialLevel)
+        {
+            Level = initialLevel;
+        }
     }
 }

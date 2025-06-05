@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   IsInfiniteStock: 1
-  CubeCount: 20
+  CubeCount: 5
   CubeSprites:
   - {fileID: 21300000, guid: 12cc2d88bcf2e0f48a050acd9b68a80c, type: 3}
   - {fileID: 21300000, guid: 41cc92ce23e1a4341ba98c34fed9370d, type: 3}

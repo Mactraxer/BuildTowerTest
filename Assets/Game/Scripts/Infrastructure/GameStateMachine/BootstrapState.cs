@@ -1,9 +1,6 @@
-﻿using AnyColorBall.Services.Data;
-using Infrastructure;
-using System;
-using Zenject;
+﻿using Infrastructure.Services;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.StateMachine
 {
     public class BootstrapState : IState
     {
@@ -30,7 +27,6 @@ namespace AnyColorBall.Infrastructure
 
         public void Exit()
         {
-
         }
 
         private void EnterLoadProgress()

@@ -1,4 +1,4 @@
-﻿namespace AnyColorBall.Infrastructure
+﻿namespace Infrastructure.StateMachine
 {
     public class GameLoopState : IState
     {

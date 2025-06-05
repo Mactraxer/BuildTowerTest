@@ -1,4 +1,6 @@
-﻿namespace AnyColorBall.Services.Data
+﻿using Data;
+
+namespace Services.Data
 {
     public class PersistentProgressService : IPersistentProgressService
     {

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-[Serializable]
-public class WorldData
+namespace Data
 {
-    public List<ItemData> Items;
-    public string Level;
-
-    public WorldData(string initialLevel)
+    [Serializable]
+    public class WorldData
     {
-        Items = new List<ItemData>();
-        Level = initialLevel;
+        public List<ItemData> Items;
+        public string Level;
+
+        public WorldData(string initialLevel)
+        {
+            Items = new List<ItemData>();
+            Level = initialLevel;
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Core.Cube;
+using Data;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.Services
 {
     public interface IGameFactory : IService
     {
@@ -10,7 +11,9 @@ namespace AnyColorBall.Infrastructure
         List<ISavedPlayerProgress> ProgressWriters { get; }
 
         void Cleanup();
+
         CubeItem[] CreateItems();
+
         GameObject CreateLevel();
     }
 }

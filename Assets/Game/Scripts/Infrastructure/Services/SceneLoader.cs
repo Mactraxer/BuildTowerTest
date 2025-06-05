@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.Services
 {
     public class SceneLoader
     {
@@ -15,7 +15,7 @@ namespace AnyColorBall.Infrastructure
             }
 
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(name);
-            loadOperation.completed +=  _ => onLoaded?.Invoke();
+            loadOperation.completed += _ => onLoaded?.Invoke();
         }
     }
 }

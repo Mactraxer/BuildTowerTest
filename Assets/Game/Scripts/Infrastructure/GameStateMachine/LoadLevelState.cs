@@ -1,9 +1,9 @@
-﻿using AnyColorBall.Infrastructure;
-using AnyColorBall.Services.Data;
-using Core.Cube;
-using System.Linq;
+﻿using Core.Cube;
+using Core.Level;
+using Infrastructure.Services;
+using Services.Data;
 
-namespace Infrastructure
+namespace Infrastructure.StateMachine
 {
     public class LoadLevelState : IPayloadableState<string>
     {
@@ -55,15 +55,7 @@ namespace Infrastructure
                 CubeItem cubeItem = cubeItems[i];
                 CubeDragHandler cubeDragHandler = cubeItem.GetComponent<CubeDragHandler>();
 
-                if (i < _progressService.Progress.WorldData.Items.Count)
-                {
-                    ItemData itemData = _progressService.Progress.WorldData.Items.First(item => item.ID == cubeItem.ItemID);
-                    level.CubeTowerCoordinator.RegisterCubeWithData(cubeItem, itemData, cubeDragHandler);
-                }
-                else
-                {
-                    level.CubeTowerCoordinator.RegisterCube(cubeItem, cubeDragHandler, true);
-                }
+                level.CubeTowerCoordinator.RegisterCube(cubeItem, cubeDragHandler);
             }
         }
     }

@@ -1,18 +1,22 @@
-﻿using System;
+﻿using Core.Cube;
+using System;
 
-[Serializable]
-public class ItemData
+namespace Data
 {
-    public PositionOnLevel PositionOnLevel;
-    public int ID;
-    public CubeState State;
-    public int SpriteId;
-
-    public ItemData()
+    [Serializable]
+    public class ItemData
     {
-        PositionOnLevel = new PositionOnLevel("DemoLevel");
-        ID = 0;
-        State = CubeState.Disposed;
-        SpriteId = 0;
+        public PositionOnLevel PositionOnLevel;
+        public int ID;
+        public CubeState State;
+        public int SpriteId;
+
+        public ItemData()
+        {
+            PositionOnLevel = new PositionOnLevel("DemoLevel");
+            ID = 0;
+            State = CubeState.Disposed;
+            SpriteId = 0;
+        }
     }
 }

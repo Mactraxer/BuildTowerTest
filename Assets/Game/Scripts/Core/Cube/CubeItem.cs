@@ -1,4 +1,6 @@
-﻿using R3;
+﻿using Data;
+using Extensions;
+using R3;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -8,6 +10,8 @@ namespace Core.Cube
 {
     public class CubeItem : MonoBehaviour, ISavedPlayerProgress
     {
+        public Subject<Unit> OnItemPlaced = new();
+
         [SerializeField] private RectTransform _rectTransform;
         [SerializeField] private CubeAnimator _animator;
         [SerializeField] private Image _image;
@@ -16,14 +20,11 @@ namespace Core.Cube
         private CubeState _cubeState;
         private int _spriteId;
 
-        public Subject<Unit> OnItemPlaced = new();
-
+        public CubeState State => _cubeState;
         public Vector2 Position => RectTransform.position;
         public float Width => RectTransform.rect.width * RectTransform.localScale.x;
         public float Height => RectTransform.rect.height * RectTransform.localScale.y;
-
         public RectTransform RectTransform => _rectTransform;
-
         public int ItemID => _itemID;
 
         public void AnimateMiss(Action callback)

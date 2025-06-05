@@ -1,6 +1,9 @@
-﻿public enum CubeState
+﻿namespace Core.Cube
 {
-    InTower,
-    InStock,
-    Disposed
+    public enum CubeState
+    {
+        InTower,
+        InStock,
+        Disposed
+    }
 }

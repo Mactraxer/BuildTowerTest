@@ -1,8 +1,9 @@
-using TMPro;
+using DG.Tweening;
+using Infrastructure.Services;
 using R3;
+using TMPro;
 using UnityEngine;
 using Zenject;
-using DG.Tweening;
 
 public class UIMessageView : MonoBehaviour
 {
@@ -23,21 +24,16 @@ public class UIMessageView : MonoBehaviour
 
     private void DisplayMessage(string msg)
     {
-        // Остановить предыдущее затухание, если есть
         _fadeTweener?.Kill();
 
         _messageText.text = msg;
         _messageText.alpha = 1f;
         _messageText.gameObject.SetActive(true);
 
-        // Запуск анимации исчезновения после задержки
-        _fadeTweener = _messageText
-            .DOFade(0f, _fadeDuration)
-            .SetDelay(_displayDuration)
-            .OnComplete(() =>
-            {
-                _messageText.gameObject.SetActive(false);
-            });
+        _fadeTweener = _messageText.DOFade(0f, _fadeDuration).SetDelay(_displayDuration).OnComplete(() =>
+        {
+            _messageText.gameObject.SetActive(false);
+        });
     }
 
     private void OnDestroy()

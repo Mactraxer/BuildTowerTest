@@ -1,16 +1,18 @@
 using Core.Cube;
-using UnityEngine;
 using Zenject;
 
-public class CubeItemPool : MonoMemoryPool<CubeItem>
+namespace Infrastructure.Pool
 {
-    protected override void Reinitialize(CubeItem item)
+    public class CubeItemPool : MonoMemoryPool<CubeItem>
     {
-        item.gameObject.SetActive(true);
-    }
+        protected override void Reinitialize(CubeItem item)
+        {
+            item.gameObject.SetActive(true);
+        }
 
-    protected override void OnDespawned(CubeItem item)
-    {
-        item.gameObject.SetActive(false);
+        protected override void OnDespawned(CubeItem item)
+        {
+            item.gameObject.SetActive(false);
+        }
     }
 }

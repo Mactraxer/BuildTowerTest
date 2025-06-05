@@ -1,9 +1,9 @@
 ﻿using Core.Cube;
-using Infrastructure;
+using Data;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.Services
 {
     public class GameFactory : IGameFactory
     {
@@ -27,11 +27,6 @@ namespace AnyColorBall.Infrastructure
         public CubeItem[] CreateItems()
         {
             CubeItem[] cubeItems = _cubeFactory.CreateCubeItems();
-            foreach (CubeItem cubeItem in cubeItems)
-            {
-                RegisterSaveable(cubeItem);
-            }
-
             return cubeItems;
         }
 
@@ -39,11 +34,6 @@ namespace AnyColorBall.Infrastructure
         {
             ProgressReaders.Clear();
             ProgressWriters.Clear();
-        }
-
-        private void RegisterSaveable(ISavedPlayerProgress progressWriter)
-        {
-            ProgressWriters.Add(progressWriter);
         }
     }
 }

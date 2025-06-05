@@ -1,13 +1,12 @@
-﻿using AnyColorBall.Infrastructure;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Infrastructure
+namespace Infrastructure.Services
 {
     public class AssetProvider : IAssetProvider
     {
-        [Inject] DiContainer _diContainer;
+        [Inject] private DiContainer _diContainer;
 
         public GameObject Instantiate(string path, Vector3 position)
         {

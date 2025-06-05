@@ -3,74 +3,74 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TowerState : ITowerState
+namespace Core.Tower
 {
-    private readonly List<CubeItem> _cubes = new();
-    private readonly float _maxHorizontalOffset;
-    private float _screenHeight;
-
-    public TowerState(float maxHorizontalOffset)
+    public class TowerState : ITowerState
     {
-        this._maxHorizontalOffset = maxHorizontalOffset;
-    }
+        private readonly List<CubeItem> _cubes = new();
+        private readonly float _maxHorizontalOffset;
+        private float _screenHeight;
 
-    //TODO: Убрать если сильно не нужно
-    public IReadOnlyList<CubeItem> Cubes => _cubes;
-    public int CubeCount => _cubes.Count;
+        public IReadOnlyList<CubeItem> Cubes => _cubes;
 
-    public void SetMaxY(float maxY)
-    {
-        _screenHeight = maxY;
-    }
+        public int CubeCount => _cubes.Count;
 
-    public void AddCube(CubeItem cube)
-    {
-        _cubes.Add(cube);
-    }
-
-
-    public bool Contain(CubeItem cubeItem)
-    {
-        return _cubes.Contains(cubeItem);
-    }
-
-    public Vector3 GetNextPosition(RectTransform towerRect, CubeItem forCube, RectTransform canvasRect)
-    {
-        Vector2 position;
-
-        if (_cubes.Count == 0)
+        public TowerState(float maxHorizontalOffset)
         {
-            position = Vector2.zero;
-        }
-        else
-        {
-            var last = _cubes[_cubes.Count - 1];
-            float lastHeight = last.Height;
-            float lastY = last.RectTransform.anchoredPosition.y;
-            float lastX = last.RectTransform.anchoredPosition.x;
-
-            float offsetX = Random.Range(-_maxHorizontalOffset, _maxHorizontalOffset);
-            position = new Vector2(lastX + offsetX, lastY + lastHeight);
+            _maxHorizontalOffset = maxHorizontalOffset;
         }
 
-        return position;
-    }
+        public void SetMaxY(float maxY)
+        {
+            _screenHeight = maxY;
+        }
 
-    public bool IsCanPlaceByHeight(CubeItem cubeItem)
-    {
-        if (_cubes.Count == 0) return true;
+        public void AddCube(CubeItem cube)
+        {
+            _cubes.Add(cube);
+        }
 
-        float totalHeight = _cubes.Sum(cubeItem => cubeItem.Height);
-        float firstCubeY = _cubes[0].RectTransform.position.y;
-        float maxY = (_screenHeight - firstCubeY);
-        return totalHeight + cubeItem.Height <= maxY;
-    }
+        public bool Contain(CubeItem cubeItem)
+        {
+            return _cubes.Contains(cubeItem);
+        }
 
-    public int RemoveCube(CubeItem cube)
-    {
-        int index = _cubes.IndexOf(cube);
-        if (index >= 0)
-            _cubes.RemoveAt(index);
-        return index;
+        public Vector3 GetNextPosition(RectTransform towerRect, CubeItem forCube, RectTransform canvasRect)
+        {
+            Vector2 position;
+
+            if (_cubes.Count == 0)
+                position = Vector2.zero;
+            else
+            {
+                var last = _cubes[_cubes.Count - 1];
+                float lastHeight = last.Height;
+                float lastY = last.RectTransform.anchoredPosition.y;
+                float lastX = last.RectTransform.anchoredPosition.x;
+
+                float offsetX = Random.Range(-_maxHorizontalOffset, _maxHorizontalOffset);
+                position = new Vector2(lastX + offsetX, lastY + lastHeight);
+            }
+
+            return position;
+        }
+
+        public bool IsCanPlaceByHeight(CubeItem cubeItem)
+        {
+            if (_cubes.Count == 0) return true;
+
+            float totalHeight = _cubes.Sum(cubeItem => cubeItem.Height);
+            float firstCubeY = _cubes[0].RectTransform.position.y;
+            float maxY = _screenHeight - firstCubeY;
+            return totalHeight + cubeItem.Height <= maxY;
+        }
+
+        public int RemoveCube(CubeItem cube)
+        {
+            int index = _cubes.IndexOf(cube);
+            if (index >= 0)
+                _cubes.RemoveAt(index);
+            return index;
+        }
     }
 }

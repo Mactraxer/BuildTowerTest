@@ -1,7 +1,8 @@
-﻿using AnyColorBall.Infrastructure;
-using AnyColorBall.Services.Data;
+﻿using Data;
+using Infrastructure.Services;
+using Services.Data;
 
-namespace Infrastructure
+namespace Infrastructure.StateMachine
 {
     public class LoadProgressState : IState
     {

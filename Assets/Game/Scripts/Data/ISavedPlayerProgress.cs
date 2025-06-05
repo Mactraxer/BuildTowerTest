@@ -1,4 +1,7 @@
-﻿public interface ISavedPlayerProgress
+﻿namespace Data
 {
-    void UpdateProgress(PlayerProgress progress);
+    public interface ISavedPlayerProgress
+    {
+        void UpdateProgress(PlayerProgress progress);
+    }
 }

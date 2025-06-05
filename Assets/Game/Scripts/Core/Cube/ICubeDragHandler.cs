@@ -1,9 +1,11 @@
-﻿using Core.Cube;
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface ICubeDragHandler
+namespace Core.Cube
 {
-    void BeginDrag(CubeItem cube);
-    void Drag(CubeItem cube, Vector2 delta);
-    void EndDrag(CubeItem cube);
+    public interface ICubeDragHandler
+    {
+        void BeginDrag(CubeItem cube);
+        void Drag(CubeItem cube, Vector2 delta);
+        void EndDrag(CubeItem cube);
+    }
 }

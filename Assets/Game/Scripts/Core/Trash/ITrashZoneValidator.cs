@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public interface ITrashZoneValidator
+namespace Core.Trash
 {
-    bool IsInside(RectTransform cubeRect, RectTransform ellipse);
+    public interface ITrashZoneValidator
+    {
+        bool IsInside(RectTransform cubeRect, RectTransform ellipse);
+    }
 }

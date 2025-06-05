@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.Services
 {
     public class AllServices
     {
@@ -16,11 +16,9 @@ namespace AnyColorBall.Infrastructure
         public TService Single<TService>() where TService : IService
         {
             TService service = Implementation<TService>.Service;
-            
+
             if (service != null)
-            {
                 return service;
-            }
             else
             {
                 throw new InvalidOperationException("Failture get service - " + typeof(TService) + ". Make sure is service registered before use");

@@ -1,6 +1,9 @@
 ﻿using Core.Cube;
 
-public interface ICubeRemover
+namespace Core.Tower
 {
-    void Remove(CubeItem cube);
+    public interface ICubeRemover
+    {
+        void Remove(CubeItem cube);
+    }
 }

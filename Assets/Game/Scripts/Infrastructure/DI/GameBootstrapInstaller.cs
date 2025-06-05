@@ -1,10 +1,18 @@
-﻿using AnyColorBall.Services.Data;
+﻿using Config;
+using Core;
 using Core.Cube;
-using Infrastructure;
+using Core.Stock;
+using Core.Tower;
+using Core.Trash;
+using Infrastructure.EntryPoint;
+using Infrastructure.Pool;
+using Infrastructure.Services;
+using Infrastructure.StateMachine;
+using Services.Data;
 using UnityEngine;
 using Zenject;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.DI
 {
     public class GameBootstrapInstaller : MonoInstaller
     {

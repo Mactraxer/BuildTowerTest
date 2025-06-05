@@ -1,4 +1,7 @@
-﻿public interface IReadablePlayerProgress
+﻿namespace Data
 {
-    void ReadProgress(PlayerProgress progress);
+    public interface IReadablePlayerProgress
+    {
+        void ReadProgress(PlayerProgress progress);
+    }
 }

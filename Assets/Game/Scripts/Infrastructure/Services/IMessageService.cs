@@ -1,8 +1,11 @@
 using R3;
-using System;
 
-public interface IMessageService
+namespace Infrastructure.Services
 {
-    void ShowMessage(GameEventType type);
-    Subject<string> OnMessage { get; }
+    public interface IMessageService
+    {
+        Subject<string> OnMessage { get; }
+
+        void ShowMessage(GameEventType type);
+    }
 }

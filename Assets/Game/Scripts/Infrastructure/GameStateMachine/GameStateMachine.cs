@@ -1,10 +1,7 @@
-﻿using AnyColorBall.Services.Data;
-using Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Zenject;
 
-namespace AnyColorBall.Infrastructure
+namespace Infrastructure.StateMachine
 {
     public class GameStateMachine
     {
